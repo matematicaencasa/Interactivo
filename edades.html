@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller de Razonamiento: Problemas de Edades</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 500px; }
+        h1 { color: #27ae60; }
+        #ejercicio { font-size: 1.2em; margin: 25px 0; min-height: 80px; color: #34495e; }
+        button { background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-size: 1em; transition: 0.3s; }
+        button:hover { background: #2ecc71; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🔢 Reto de Edades</h1>
+        <p>Halla la solución planteando una ecuación:</p>
+        <div id="ejercicio">Haz clic para iniciar el taller...</div>
+        <button onclick="generar()">Siguiente Ejercicio</button>
+    </div>
+
+    <script>
+        const retos = [
+            "La edad de un padre es el triple que la de su hijo. Si entre los dos suman 48 años, ¿cuál es la edad de cada uno?",
+            "Hace 5 años la edad de una madre era el cuádruplo de la de su hijo. Si hoy la suma de sus edades es 40, ¿qué edad tienen?",
+            "Juan tiene 12 años y su padre 38. ¿Dentro de cuántos años la edad del padre será el triple de la de Juan?",
+            "La suma de las edades de dos hermanos es 28 años. Si el mayor tiene 4 años más que el menor, ¿cuántos años tienen?"
+        ];
+        function generar() {
+            const index = Math.floor(Math.random() * retos.length);
+            document.getElementById('ejercicio').innerText = retos[index];
+        }
+    </script>
+</body>
+</html>
