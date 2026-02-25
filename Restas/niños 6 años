@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Restas Master - Pantalla Completa</title>
+    <style>
+        :root {
+            --n1-color: #2196f3;
+            --n2-color: #4caf50;
+            --n3-color: #ff9800;
+        }
+        /* Ajuste para evitar scroll y fijar la vista */
+        body { 
+            font-family: 'Arial Rounded MT Bold', sans-serif; 
+            background: #f0f2f5; 
+            margin: 0; 
+            padding: 5px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            overflow: hidden; /* Evita el scroll innecesario */
+            height: 100vh;
+        }
+        
+        .tabs { display: flex; gap: 5px; margin-bottom: 5px; width: 100%; max-width: 400px; }
+        .tab-btn { flex: 1; padding: 10px 2px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; background: #cbd5e0; font-size: 0.75rem; color: #4a5568; }
+        
+        .tab-btn.active[data-lvl="1"] { background: var(--n1-color); color: white; }
+        .tab-btn.active[data-lvl="2"] { background: var(--n2-color); color: white; }
+        .tab-btn.active[data-lvl="3"] { background: var(--n3-color); color: white; }
+
+        .card { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 280px; 
+            text-align: right; 
+            border-top: 8px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Título y Botón arriba para que no se pierdan con el teclado */
+        .header-game { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .level-tag { font-size: 0.8rem; text-transform: uppercase; color: #718096; margin: 0; }
+        
+        button#action-btn { 
+            width: 100%; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            color: white; 
+            order: -1; /* Mueve el botón al principio del contenedor */
+        }
+
+        .math-box { 
+            font-size: 3.5rem; /* Tamaño reducido para móviles */
+            line-height: 1; 
+            color: #2d3748; 
+            position: relative; 
+            font-family: 'Courier New', Courier, monospace; 
+            letter-spacing: 8px;
+            margin-top: 5px;
+        }
+        .line { border-bottom: 4px solid #2d3748; margin: 8px 0; }
+        .minus { position: absolute; left: -30px; bottom: 5px; font-size: 2.5rem; letter-spacing: 0; }
+        
+        input { 
+            width: 100%; 
+            font-size: 3.5rem; 
+            text-align: right; 
+            border: none; 
+            border-bottom: 3px dashed #edf2f7; 
+            outline: none; 
+            color: #1a202c; 
+            font-family: 'Courier New', Courier, monospace; 
+            letter-spacing: 8px; 
+            background: transparent; 
+        }
+        
+        #feedback { 
+            height: 30px; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            text-align: center; 
+            margin-top: 5px;
+        }
+        
+        .success-bg { background-color: #e6fffa !important; }
+    </style>
+</head>
+<body>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-lvl="1" onclick="initLevel(1)">1 CIFRA</button>
+        <button class="tab-btn" data-lvl="2" onclick="initLevel(2)">2 CIFRAS</button>
+        <button class="tab-btn" data-lvl="3" onclick="initLevel(3)">LLEVANDO</button>
+    </div>
+
+    <div class="card" id="game-card">
+        <div class="header-game">
+            <button id="action-btn" onclick="verify()">COMPROBAR</button>
+            <span class="level-tag" id="level-label">Nivel 1</span>
+        </div>
+
+        <div class="math-box">
+            <div id="val1">0</div>
+            <div class="minus">-</div>
+            <div id="val2">0</div>
+        </div>
+        <div class="line"></div>
+        <input type="number" id="user-input" pattern="\d*" placeholder="?">
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        let lvl = 1;
+        let v1, v2, goal;
+        let isWaiting = false;
+
+        const ui = {
+            card: document.getElementById('game-card'),
+            btn: document.getElementById('action-btn'),
+            label: document.getElementById('level-label'),
+            in: document.getElementById('user-input'),
+            msg: document.getElementById('feedback')
+        };
+
+        const config = {
+            1: { name: 'Restas Simples', color: '#2196f3' },
+            2: { name: '2 Cifras Sin Llevar', color: '#4caf50' },
+            3: { name: '2 Cifras Llevando', color: '#ff9800' }
+        };
+
+        function initLevel(n) {
+            lvl = n;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-lvl="${n}"]`).classList.add('active');
+            ui.card.style.borderColor = config[n].color;
+            ui.btn.style.backgroundColor = config[n].color;
+            ui.label.innerText = config[n].name;
+            newOperation();
+        }
+
+        function newOperation() {
+            isWaiting = false;
+            ui.card.classList.remove('success-bg');
+            
+            if (lvl === 1) {
+                v1 = Math.floor(Math.random() * 9) + 1;
+                v2 = Math.floor(Math.random() * (v1 + 1));
+            } 
+            else if (lvl === 2) {
+                let d1 = Math.floor(Math.random() * 8) + 1;
+                let u1 = Math.floor(Math.random() * 9) + 1;
+                let d2 = Math.floor(Math.random() * d1);
+                let u2 = Math.floor(Math.random() * u1);
+                v1 = (d1 * 10) + u1; v2 = (d2 * 10) + u2;
+            } 
+            else if (lvl === 3) {
+                let d1 = Math.floor(Math.random() * 7) + 2;
+                let u1 = Math.floor(Math.random() * 5);
+                let d2 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                let u2 = Math.floor(Math.random() * 5) + 5;
+                v1 = (d1 * 10) + u1; v2 = (d2 * 10) + u2;
+            }
+
+            goal = v1 - v2;
+            document.getElementById('val1').innerText = v1;
+            document.getElementById('val2').innerText = v2;
+            ui.in.value = '';
+            ui.msg.innerText = '';
+            ui.btn.innerText = 'COMPROBAR';
+            ui.in.focus();
+        }
+
+        function verify() {
+            if (isWaiting) return;
+            let val = parseInt(ui.in.value);
+            if (isNaN(val)) return;
+
+            if (val === goal) {
+                isWaiting = true;
+                ui.msg.innerText = "¡Excelente! 🌟";
+                ui.msg.style.color = "#2f855a";
+                ui.card.classList.add('success-bg');
+                setTimeout(newOperation, 1500);
+            } else {
+                ui.msg.innerText = "Intenta de nuevo ✏️";
+                ui.msg.style.color = "#c53030";
+            }
+        }
+
+        ui.in.addEventListener("keyup", (e) => { if (e.key === "Enter") verify(); });
+        initLevel(1);
+    </script>
+</body>
+</html>
