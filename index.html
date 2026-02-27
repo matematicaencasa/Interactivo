@@ -3,188 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecosistema Educativo | Matemática y Física</title>
+    <title>Ecosistema Educativo | Aula Virtual</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb; /* Azul moderno */
-            --secondary: #0f172a; /* Azul muy oscuro para el fondo */
-            --bg: #f8fafc;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+        :root { --primary: #2563eb; --secondary: #0f172a; --bg: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); margin: 0; line-height: 1.6; }
+        header { 
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%); 
+            color: white; padding: 100px 20px 140px; text-align: center; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%); 
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            line-height: 1.6;
+        header h1 { font-size: 3rem; margin: 0; letter-spacing: -1.5px; }
+        .container { max-width: 900px; margin: -80px auto 80px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .card { 
+            background: white; border-radius: 20px; padding: 40px; 
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); transition: 0.3s; 
+            text-align: center; border: 1px solid #e2e8f0; 
         }
-
-        /* Encabezado con el corte diagonal que te gusta */
-        header {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
-            color: white;
-            padding: 100px 20px 140px; /* Más padding abajo para el efecto flotante */
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        .card:hover { transform: translateY(-15px); border-color: var(--primary); }
+        .btn { 
+            display: inline-block; background: var(--primary); color: white; 
+            padding: 15px 30px; border-radius: 12px; text-decoration: none; 
+            font-weight: 600; width: 80%; margin-top: 20px; 
         }
-
-        header h1 {
-            font-size: 3rem;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: -1.5px;
-        }
-
-        header p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            font-weight: 300;
-            margin-top: 15px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Contenedor de tarjetas "flotantes" */
-        .container {
-            max-width: 900px; /* Ajustado para 2 tarjetas */
-            margin: -80px auto 80px; /* Margen negativo para subir las tarjetas */
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            justify-content: center; /* Centra las tarjetas si hay espacio */
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); /* Sombra suave y profunda */
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #e2e8f0;
-            position: relative; /* Para el efecto de hover */
-        }
-
-        .card:hover {
-            transform: translateY(-15px); /* Se eleva más al pasar el mouse */
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary);
-        }
-
-        .card h2 {
-            font-size: 1.75rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            flex-grow: 1;
-            font-size: 1rem;
-            margin-bottom: 25px;
-        }
-
-        /* Botones modernos y grandes */
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
-            transition: background 0.2s, transform 0.1s;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background: #1d4ed8;
-        }
-
-        .btn:active {
-            transform: scale(0.98); /* Efecto de pulsación */
-        }
-
-        /* Etiquetas de materia */
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 99px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .badge-math {
-            background: #dbeafe; /* Azul claro */
-            color: var(--primary);
-        }
-
-        .badge-physics {
-            background: #fef3c7; /* Amarillo claro */
-            color: #d97706; /* Ámbar oscuro */
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0;
-            background: white;
-        }
-
-        /* Ajustes para móviles */
-        @media (max-width: 700px) {
-            header { padding: 80px 20px 110px; }
-            header h1 { font-size: 2.25rem; }
-            .container { margin-top: -60px; grid-template-columns: 1fr; }
-            .card { padding: 30px; }
-        }
+        footer { text-align: center; padding: 50px; color: #94a3b8; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Ecosistema Educativo Digital</h1>
-    <p>Recursos interactivos y simulaciones para el aprendizaje avanzado de Ciencias Exactas</p>
-</header>
-
-<div class="container">
-    <div class="card">
-        <div>
-            <span class="badge badge-math">Matemáticas</span>
+    <header>
+        <h1>Ecosistema Educativo Digital</h1>
+        <p>Selecciona un área para explorar los recursos interactivos</p>
+    </header>
+    <div class="container">
+        <div class="card">
+            <h2 style="font-size: 2.5rem;">π</h2>
+            <h2>MATEMÁTICA</h2>
+            <p>Accede a talleres de razonamiento, álgebra y geometría interactiva.</p>
+            <a href="matematica.html" class="btn">Ver Submenú</a>
         </div>
-        <h2>Razonamiento Lógico</h2>
-        <p>Desarrolla tu capacidad de análisis con nuestro taller interactivo de problemas de edades. Aprende a plantear y resolver ecuaciones complejas paso a paso.</p>
-        <a href="edades.html" class="btn">Iniciar Práctica</a>
-    </div>
-
-    <div class="card">
-        <div>
-            <span class="badge badge-physics">Física</span>
+        <div class="card">
+            <h2 style="font-size: 2.5rem; color: #d97706;">⚛</h2>
+            <h2>FÍSICA</h2>
+            <p>Explora laboratorios de electrodinámica y cinemática.</p>
+            <a href="fisica_menu.html" class="btn" style="background: #d97706;">Ver Submenú</a>
         </div>
-        <h2>Electrodinámica</h2>
-        <p>Explora los fundamentos de la electricidad. Practica con ejercicios de intensidad de corriente, carga y tiempo utilizando nuestro generador de retos aleatorios.</p>
-        <a href="fisica.html" class="btn" style="background: #d97706;">Explorar Taller</a>
     </div>
-</div>
-
-<footer>
-    © 2026 | Plataforma de apoyo docente desarrollada para la instrucción técnica en Loja, Ecuador.
-</footer>
-
+    <footer>© 2026 | Recursos Académicos para Loja, Ecuador</footer>
 </body>
 </html>
