@@ -3,173 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecosistema Educativo | Profe de Física y Mate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Aula Virtual | Matemáticas & Física</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #0f172a;
-            --accent: #10b981;
-            --bg: #f8fafc;
-            --text: #1e293b;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #ffffff;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
             margin: 0;
-            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        /* Navegación */
+        nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 700;
+        .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--primary);
             letter-spacing: -1px;
         }
 
+        /* Hero Section */
+        header {
+            padding: 100px 5%;
+            text-align: center;
+            background: radial-gradient(circle at top right, #f1f5f9, #ffffff);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
         header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-            margin-top: 10px;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 20px auto;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: -40px auto 60px;
-            padding: 0 20px;
+        /* Secciones de Contenido */
+        .main-content {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
-        .card {
+        .subject-card {
             background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            border-radius: 24px;
+            padding: 40px;
             border: 1px solid #e2e8f0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary);
+        .subject-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.08);
+            border-color: var(--accent);
         }
 
-        .card h2 {
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
             font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
+        }
+
+        .math-icon { background: #eff6ff; color: #2563eb; }
+        .physics-icon { background: #faf5ff; color: #9333ea; }
+
+        h2 { font-size: 1.8rem; margin-bottom: 15px; font-weight: 700; }
+
+        .feature-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+            color: var(--text-muted);
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .card p {
-            color: #64748b;
-            flex-grow: 1;
-            font-size: 0.95rem;
+        .feature-list li::before {
+            content: "→";
+            color: var(--accent);
+            font-weight: bold;
         }
 
-        .btn {
+        .action-btn {
             display: inline-block;
+            width: 100%;
+            padding: 16px;
             background: var(--primary);
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
             text-decoration: none;
+            border-radius: 12px;
             font-weight: 600;
             text-align: center;
-            transition: background 0.2s;
-            margin-top: 20px;
+            transition: 0.3s;
+            box-sizing: border-box;
         }
 
-        .btn:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 99px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            background: #dbeafe;
-            color: var(--primary);
+        .action-btn:hover {
+            background: var(--accent);
         }
 
         footer {
+            padding: 60px 5%;
+            background: var(--primary);
+            color: white;
             text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-            font-size: 0.9rem;
+            margin-top: 100px;
         }
 
-        @media (max-width: 600px) {
-            header { padding: 60px 20px; }
-            header h1 { font-size: 2rem; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+<nav>
+    <div class="logo">AulaVirtual.edu</div>
+    <div style="color: var(--text-muted); font-size: 0.9rem;">Loja, Ecuador</div>
+</nav>
+
 <header>
-    <h1>Ecosistema Educativo Digital</h1>
-    <p>Innovación pedagógica en Matemáticas y Física aplicada al deporte</p>
+    <h1>Ciencia y Razonamiento</h1>
+    <p>Plataforma de recursos interactivos diseñada para el aprendizaje práctico de las ciencias exactas.</p>
 </header>
 
-<div class="container">
-    <div class="card">
-        <span class="badge">Matemáticas</span>
-        <h2>Razonamiento Lógico</h2>
-        <p>Domina el planteo de ecuaciones con nuestro taller interactivo de problemas de edades. Ideal para preparación de exámenes.</p>
-        <a href="edades.html" class="btn">Iniciar Práctica</a>
-    </div>
+<div class="main-content">
+    <div class="grid">
+        <div class="subject-card">
+            <div class="icon-box math-icon">∑</div>
+            <h2>Matemáticas</h2>
+            <p>Desarrollo del pensamiento lógico a través de la resolución de problemas estructurados.</p>
+            <ul class="feature-list">
+                <li>Problemas de Edades</li>
+                <li>Ecuaciones Lineales</li>
+                <li>Razonamiento Numérico</li>
+            </ul>
+            <a href="edades.html" class="btn action-btn">Ingresar al Taller</a>
+        </div>
 
-    <div class="card">
-        <span class="badge" style="background: #fef3c7; color: #d97706;">Física</span>
-        <h2>Electrodinámica</h2>
-        <p>Aprende sobre intensidad de corriente y magnitudes eléctricas con ejercicios prácticos y generador de retos.</p>
-        <a href="fisica.html" class="btn">Explorar Taller</a>
-    </div>
-
-    <div class="card">
-        <span class="badge" style="background: #dcfce7; color: #16a34a;">Deporte</span>
-        <h2>Linces Voleibol Club</h2>
-        <p>Vinculamos la educación con el deporte. Accede a reglamentos, uniformes y comunicados oficiales del club.</p>
-        <a href="#" class="btn btn-outline">Portal del Club</a>
+        <div class="subject-card">
+            <div class="icon-box physics-icon">⚛</div>
+            <h2>Física</h2>
+            <p>Exploración de los fenómenos naturales y las leyes de la electrodinámica moderna.</p>
+            <ul class="feature-list">
+                <li>Intensidad de Corriente</li>
+                <li>Magnitudes Eléctricas</li>
+                <li>Laboratorio Virtual</li>
+            </ul>
+            <a href="fisica.html" class="btn action-btn" style="background: #9333ea;">Abrir Laboratorio</a>
+        </div>
     </div>
 </div>
 
 <footer>
-    © 2026 | Desarrollado profesionalmente para el apoyo docente en Loja, Ecuador.
+    <p><b>Recursos Académicos 2026</b></p>
+    <p style="opacity: 0.6; font-size: 0.8rem;">Desarrollado para la instrucción técnica en educación media y superior.</p>
 </footer>
 
 </body>
